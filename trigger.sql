@@ -77,3 +77,17 @@ VALUES ('')
 END;
 
 //
+
+--exercicio 4
+DELIMITER //
+CREATE TRIGGER impede_nome_vazio_null_trigger
+BEFORE UPDATE ON Clientes
+FOR EACH ROW
+BEGIN
+    IF NEW.nome IS NULL OR NEW.nome = '' THEN
+        SET NEW.nome = OLD.nome;  -- Reverta a atualização do nome
+        INSERT INTO Auditoria (mensagem) VALUES (CONCAT('Tentativa de atualização do nome para vazio ou NULL em ', NOW()));
+    END IF;
+END;
+//
+DELIMITER ;

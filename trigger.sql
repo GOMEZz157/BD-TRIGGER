@@ -60,3 +60,20 @@ VALUES ('Tentaiva de exclusão em Clientes')
 END;
 
 //
+
+--exercicio 3
+DELIMITER //
+
+CREATE TRIGGER cliente_att BEFORE UPDATE ON Clientes
+
+FOR EACH ROW
+
+BEGIN
+
+INSERT INTO Auditoria (mensagem)
+
+VALUES ('')
+
+END;
+
+//

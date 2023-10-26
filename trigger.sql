@@ -25,3 +25,21 @@ CREATE TABLE Pedidos (
     quantidade INT NOT NULL,
     FOREIGN KEY (produto_id) REFERENCES Produtos(id)
 );
+
+--exercicio 1
+
+DELIMITER //
+
+CREATE TRIGGER cliente_data BEFORE INSERT ON Clientes
+
+FOR EACH ROW
+
+BEGIN
+
+INSERT INTO Auditoria (mensagem)
+
+VALUES ('Informação após mudança na tabela clientes')
+
+END;
+
+//

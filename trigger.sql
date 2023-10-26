@@ -91,3 +91,24 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+--exercicio 5
+DELIMITER //
+CREATE TRIGGER decrementa_estoque_pedido_trigger
+AFTER INSERT ON Pedidos
+FOR EACH ROW
+BEGIN
+    UPDATE Produtos
+    SET estoque = estoque - NEW.quantidade
+    WHERE id = NEW.produto_id;
+
+    DECLARE produto_nome VARCHAR(255);
+    SET produto_nome = (SELECT nome FROM Produtos WHERE id = NEW.produto_id);
+
+    IF (SELECT estoque FROM Produtos WHERE id = NEW.produto_id) < 5 THEN
+        INSERT INTO Auditoria (mensagem) VALUES ('Estoque baixo para o produto ' + produto_nome + ' em ' + NOW());
+    END IF;
+END;
+//
+DELIMITER ;
+

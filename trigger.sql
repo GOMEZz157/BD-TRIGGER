@@ -43,3 +43,20 @@ VALUES ('Informação após mudança na tabela clientes')
 END;
 
 //
+
+--exercicio 2
+DELIMITER //
+
+CREATE TRIGGER cliente_exclusao AFTER DELETE ON Clientes
+
+FOR EACH ROW
+
+BEGIN
+
+INSERT INTO Auditoria (mensagem)
+
+VALUES ('Tentaiva de exclusão em Clientes')
+
+END;
+
+//
